@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Powder Peak Resort · Swiss Alps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --snow:#f8f6f2;
+      --navy:#0d1f35;
+      --ice:#c8ddef;
+      --gold:#c9a84c;
+      --pine:#2a4a30;
+      --mist:#e8eef5;
+    }
+    body{font-family:'Jost',sans-serif;background:var(--navy);color:var(--snow);overflow-x:hidden}
+
+    .hero{
+      position:relative;min-height:100vh;display:flex;flex-direction:column;
+      justify-content:flex-end;padding:3rem;overflow:hidden;
+      background:linear-gradient(160deg,#0d1f35 0%,#1a3a5c 40%,#2c5a7a 100%);
+    }
+    .mountain-svg{position:absolute;bottom:0;left:0;width:100%;pointer-events:none}
+    .stars{position:absolute;top:0;left:0;width:100%;height:60%;pointer-events:none}
+    .hero-eyebrow{font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:400}
+    .hero-title{font-family:'Playfair Display',serif;font-size:clamp(3rem,8vw,7rem);line-height:1;color:var(--snow);margin-bottom:0.5rem}
+    .hero-title em{font-style:italic;color:var(--ice)}
+    .hero-sub{font-size:1rem;font-weight:300;color:var(--ice);letter-spacing:0.08em;margin-bottom:2rem}
+    .hero-cta{
+      display:inline-block;padding:0.85rem 2.5rem;border:1px solid var(--gold);
+      color:var(--gold);font-family:'Jost',sans-serif;font-size:0.8rem;
+      letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;
+      cursor:pointer;transition:all 0.3s;background:transparent;
+    }
+    .hero-cta:hover{background:var(--gold);color:var(--navy)}
+
+    .snow-ticker{
+      background:var(--gold);color:var(--navy);padding:0.6rem 1.5rem;
+      font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;
+      display:flex;gap:2rem;overflow-x:auto;flex-wrap:wrap;
+    }
+    .ticker-item{white-space:nowrap;font-weight:500}
+    .ticker-item span{opacity:0.6;margin-right:0.5rem}
+
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);background:#0a1928;border-bottom:1px solid rgba(200,221,239,0.1)}
+    .stat{padding:2rem 1.5rem;text-align:center;border-right:1px solid rgba(200,221,239,0.1)}
+    .stat:last-child{border-right:none}
+    .stat-num{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--ice);line-height:1}
+    .stat-label{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,246,242,0.5);margin-top:0.4rem}
+
+    .section{padding:4rem 2rem;max-width:1100px;margin:0 auto}
+    .section-label{font-size:0.7rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem}
+    .section-title{font-family:'Playfair Display',serif;font-size:2.4rem;color:var(--snow);margin-bottom:2rem;line-height:1.15}
+
+    .trails{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(200,221,239,0.08)}
+    .trail{background:#0d1f35;padding:2rem 1.5rem;transition:background 0.25s}
+    .trail:hover{background:#132a45}
+    .trail-badge{width:28px;height:28px;border-radius:50%;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+    .green{background:#3a7d44;color:#e8f5ea}
+    .blue{background:#1a5fa8;color:#ddeeff}
+    .black{background:#1a1a1a;color:#ccc;border:1px solid #555}
+    .trail-name{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--snow);margin-bottom:0.4rem}
+    .trail-desc{font-size:0.82rem;color:rgba(248,246,242,0.5);line-height:1.6;font-weight:300}
+
+    .lodge{background:#0a1928;padding:4rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    .lodge-img{aspect-ratio:4/3;background:#1a3a5c;position:relative;overflow:hidden}
+    .lodge-content{padding:0 2rem}
+    .lodge-quote{font-family:'Playfair Display',serif;font-style:italic;font-size:1.5rem;line-height:1.5;color:var(--ice);border-left:2px solid var(--gold);padding-left:1.5rem;margin:1.5rem 0}
+
+    .packages{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2rem}
+    .package{border:1px solid rgba(200,221,239,0.15);padding:2rem;position:relative;transition:border-color 0.25s}
+    .package:hover{border-color:var(--gold)}
+    .package.featured{border-color:var(--gold)}
+    .pkg-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:3px 14px;font-weight:500}
+    .pkg-name{font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(248,246,242,0.5);margin-bottom:0.5rem}
+    .pkg-price{font-family:'Playfair Display',serif;font-size:2.5rem;color:var(--snow);line-height:1}
+    .pkg-price sup{font-size:1rem;vertical-align:top;margin-top:0.5rem;display:inline-block}
+    .pkg-period{font-size:0.75rem;color:rgba(248,246,242,0.4);margin-left:4px}
+    .pkg-divider{border:none;border-top:1px solid rgba(200,221,239,0.1);margin:1.25rem 0}
+    .pkg-features{list-style:none;font-size:0.82rem;font-weight:300;color:rgba(248,246,242,0.7);line-height:2}
+    .pkg-features li::before{content:"— ";color:var(--gold);font-weight:400}
+    .pkg-btn{display:block;text-align:center;margin-top:1.5rem;padding:0.7rem;border:1px solid rgba(200,221,239,0.3);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--snow);cursor:pointer;transition:all 0.25s;background:transparent;font-family:'Jost',sans-serif;width:100%}
+    .pkg-btn:hover,.package.featured .pkg-btn{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+
+    footer{background:#060f1a;padding:3rem 2rem;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(200,221,239,0.08);flex-wrap:wrap;gap:1.5rem}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--snow)}
+    .footer-logo em{color:var(--gold);font-style:italic}
+    .footer-links{display:flex;gap:2rem}
+    .footer-links a{font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(248,246,242,0.4);text-decoration:none}
+    .footer-links a:hover{color:var(--gold)}
+    .footer-copy{font-size:0.7rem;color:rgba(248,246,242,0.25);letter-spacing:0.08em}
+
+    @media(max-width:700px){
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .trails{grid-template-columns:1fr}
+      .lodge{grid-template-columns:1fr}
+      .packages{grid-template-columns:1fr}
+      .lodge-img{display:none}
+      footer{flex-direction:column;text-align:center}
+      .footer-links{flex-wrap:wrap;justify-content:center}
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars">
+    <svg width="100%" height="100%" viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <g fill="white" opacity="0.6">
+        <circle cx="120" cy="60" r="1.2"/><circle cx="250" cy="30" r="0.8"/><circle cx="410" cy="90" r="1.4"/>
+        <circle cx="580" cy="40" r="1"/><circle cx="720" cy="70" r="0.9"/><circle cx="900" cy="25" r="1.3"/>
+        <circle cx="1050" cy="80" r="0.7"/><circle cx="180" cy="140" r="0.9"/><circle cx="340" cy="180" r="1.1"/>
+        <circle cx="500" cy="120" r="0.8"/><circle cx="660" cy="160" r="1.2"/><circle cx="820" cy="100" r="0.6"/>
+        <circle cx="980" cy="145" r="1"/><circle cx="1100" cy="50" r="0.8"/><circle cx="70" cy="200" r="1"/>
+        <circle cx="440" cy="210" r="0.7"/><circle cx="750" cy="190" r="1.1"/><circle cx="1020" cy="220" r="0.9"/>
+      </g>
+    </svg>
+  </div>
+  <svg class="mountain-svg" viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <polygon points="0,420 200,420 500,160 800,280 1000,100 1200,240 1440,80 1440,420" fill="#0a1928"/>
+    <polygon points="0,420 160,420 400,200 650,310 900,150 1100,260 1300,130 1440,220 1440,420" fill="#0d1f35" opacity="0.7"/>
+    <polygon points="300,270 500,160 700,240" fill="white" opacity="0.04"/>
+    <polygon points="800,200 1000,100 1150,180" fill="white" opacity="0.05"/>
+  </svg>
+  <div style="position:relative;z-index:2">
+    <div class="hero-eyebrow">Est. 1962 · Altitude 3,200m · Swiss Alps</div>
+    <h1 class="hero-title">Powder<br><em>Peak</em></h1>
+    <p class="hero-sub">Where the mountain meets the extraordinary</p>
+    <button class="hero-cta" onclick="document.querySelector('.packages').scrollIntoView({behavior:'smooth'})">Book Your Season</button>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="snow-ticker">
+  <div class="ticker-item"><span>Snow depth</span>147 cm</div>
+  <div class="ticker-item"><span>Fresh snow</span>23 cm overnight</div>
+  <div class="ticker-item"><span>Lifts open</span>34 of 36</div>
+  <div class="ticker-item"><span>Visibility</span>Excellent</div>
+  <div class="ticker-item"><span>Summit temp</span>–9°C</div>
+  <div class="ticker-item"><span>Conditions</span>Powder perfection</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-num">120</div><div class="stat-label">Marked Runs</div></div>
+  <div class="stat"><div class="stat-num">3,200<span style="font-size:1.2rem">m</span></div><div class="stat-label">Peak Altitude</div></div>
+  <div class="stat"><div class="stat-num">36</div><div class="stat-label">Lifts & Gondolas</div></div>
+  <div class="stat"><div class="stat-num">420<span style="font-size:1.2rem">km</span></div><div class="stat-label">Groomed Terrain</div></div>
+</div>
+
+<!-- TRAILS -->
+<div style="background:#0d1f35;padding:4rem 0">
+  <div class="section">
+    <div class="section-label">The mountain</div>
+    <div class="section-title">A run for every<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ice)">ambition</em></div>
+    <div class="trails">
+      <div class="trail">
+        <div class="trail-badge green">●</div>
+        <div class="trail-name">Sunrise Valley</div>
+        <div class="trail-desc">A gentle 4km descent through birch forest. Perfect for first mornings on the mountain.</div>
+      </div>
+      <div class="trail">
+        <div class="trail-badge blue">●</div>
+        <div class="trail-name">The Meridian</div>
+        <div class="trail-desc">Long arcing cruiser with breathtaking valley views. The signature intermediate experience.</div>
+      </div>
+      <div class="trail">
+        <div class="trail-badge black">◆</div>
+        <div class="trail-name">Cornice Drop</div>
+        <div class="trail-desc">Expert-only. 45° pitch off the north face. Untracked powder fields after fresh snowfall.</div>
+      </div>
+      <div class="trail">
+        <div class="trail-badge green">●</div>
+        <div class="trail-name">Meadow Loop</div>
+        <div class="trail-desc">Winding through open glades. Ideal for building confidence and enjoying the scenery.</div>
+      </div>
+      <div class="trail">
+        <div class="trail-badge blue">●</div>
+        <div class="trail-name">Silver Ridge</div>
+        <div class="trail-desc">High-alpine exposure with sustained pitch. Rewards those who seek the sky.</div>
+      </div>
+      <div class="trail">
+        <div class="trail-badge black">◆</div>
+        <div class="trail-name">The Abyss</div>
+        <div class="trail-desc">Off-piste legend. Only accessible via the summit cable car. Helmet required.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LODGE -->
+<div class="lodge">
+  <div class="lodge-img">
+    <svg width="100%" height="100%" viewBox="0 0 500 375" xmlns="http://www.w3.org/2000/svg">
+      <rect width="500" height="375" fill="#1a3a5c"/>
+      <polygon points="100,375 250,130 400,375" fill="#0d2a45"/>
+      <rect x="195" y="240" width="110" height="135" fill="#0a1f35"/>
+      <rect x="210" y="255" width="30" height="40" fill="#c9a84c" opacity="0.5"/>
+      <rect x="255" y="255" width="30" height="40" fill="#c9a84c" opacity="0.5"/>
+      <polygon points="150,370 250,240 350,370" fill="#132a45"/>
+      <circle cx="400" cy="80" r="50" fill="#1a3560" opacity="0.5"/>
+      <circle cx="400" cy="80" r="35" fill="#c9a84c" opacity="0.15"/>
+      <circle cx="400" cy="80" r="20" fill="#c9a84c" opacity="0.25"/>
+      <g fill="white" opacity="0.5">
+        <circle cx="80" cy="40" r="1"/><circle cx="160" cy="20" r="1.2"/><circle cx="310" cy="35" r="0.8"/>
+        <circle cx="450" cy="15" r="1"/><circle cx="490" cy="55" r="0.7"/><circle cx="50" cy="90" r="0.9"/>
+      </g>
+    </svg>
+  </div>
+  <div class="lodge-content">
+    <div class="section-label">The lodge</div>
+    <div class="section-title" style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--snow);margin-bottom:1rem;line-height:1.2">Refuge at<br><em style="color:var(--ice);font-style:italic">the summit</em></div>
+    <div class="lodge-quote">"After the last run, the fire is already lit."</div>
+    <p style="font-size:0.88rem;color:rgba(248,246,242,0.55);line-height:1.8;font-weight:300">The Powder Peak Lodge has welcomed skiers for over six decades. Stone walls, timber beams, and a kitchen that takes alpine cuisine seriously. Sixty rooms, two restaurants, and a spa with views of the glacier.</p>
+    <p style="margin-top:1rem;font-size:0.88rem;color:rgba(248,246,242,0.55);line-height:1.8;font-weight:300">Open from first lift to last light — and well beyond.</p>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div style="background:#0d1f35;padding:5rem 0">
+  <div class="section">
+    <div class="section-label">Ski packages</div>
+    <div class="section-title">Choose your<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ice)">season</em></div>
+    <div class="packages">
+      <div class="package">
+        <div class="pkg-name">Day Pass</div>
+        <div class="pkg-price"><sup>€</sup>89</div>
+        <div class="pkg-period">per person</div>
+        <hr class="pkg-divider">
+        <ul class="pkg-features">
+          <li>All-mountain access</li>
+          <li>Trail map included</li>
+          <li>Locker rental</li>
+        </ul>
+        <button class="pkg-btn">Select</button>
+      </div>
+      <div class="package featured">
+        <div class="pkg-badge">Most popular</div>
+        <div class="pkg-name">Weekend Escape</div>
+        <div class="pkg-price"><sup>€</sup>340</div>
+        <div class="pkg-period">2 nights + lifts</div>
+        <hr class="pkg-divider">
+        <ul class="pkg-features">
+          <li>2 nights lodge stay</li>
+          <li>Lift passes included</li>
+          <li>Breakfast & dinner</li>
+          <li>Spa access</li>
+        </ul>
+        <button class="pkg-btn">Select</button>
+      </div>
+      <div class="package">
+        <div class="pkg-name">Full Season</div>
+        <div class="pkg-price"><sup>€</sup>1,890</div>
+        <div class="pkg-period">per season</div>
+        <hr class="pkg-divider">
+        <ul class="pkg-features">
+          <li>Unlimited lift access</li>
+          <li>Priority queuing</li>
+          <li>10% lodge discount</li>
+          <li>Guest passes (×2)</li>
+          <li>Ski concierge</li>
+        </ul>
+        <button class="pkg-btn">Select</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESERVATIONS -->
+<div style="background:#0a1928;padding:5rem 2rem;text-align:center">
+  <div style="max-width:900px;margin:0 auto">
+    <div class="section-label" style="display:block;margin-bottom:0.75rem">Reservations</div>
+    <div class="section-title" style="margin-bottom:2.5rem">Book your<br><em style="font-family:'Playfair Display',serif;font-style:italic;color:var(--ice)">stay</em></div>
+    <gomeddo-frontend-builder
+      apiKey="6417e55f-6330-436c-a0b7-ce9509a4180c"
+      developerName="Ski_Lodge"
+      environment="PRODUCTION"
+      backgroundColor="#16072D"
+      primaryColor="#9BCFFF"
+    >
+    </gomeddo-frontend-builder>
+    <script type="module" src="https://frontend.gomeddo.com/gomeddo-frontend-builder.mjs"></script>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Powder <em>Peak</em></div>
+  <div class="footer-links">
+    <a href="#">Mountain</a>
+    <a href="#">Lodge</a>
+    <a href="#">Lessons</a>
+    <a href="#">Snow Report</a>
+    <a href="#">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 Powder Peak Resort · Swiss Alps</div>
+</footer>
+
+</body>
+</html>
